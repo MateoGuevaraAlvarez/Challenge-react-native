@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import MenuList from './MenuList';
-
+//api key 5163b17d295b4d59a4d339fc3b2cbeeb
 const App = () => {
   const [menuData, setMenuData] = useState([]);
   const [averageHealthscore, setAverageHealthscore] = useState(0);
