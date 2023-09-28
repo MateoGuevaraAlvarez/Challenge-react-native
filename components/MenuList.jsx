@@ -33,7 +33,10 @@ const MenuList = ({ menuData, onPressMoreInfo }) => {
                 <TouchableOpacity onPress={() => onPressMoreInfo(item)}>
                   <Text style={styles.moreInfoButton}>Más información</Text>
                 </TouchableOpacity>
-              </View>
+                <TouchableOpacity onPress={() => onPressEliminar(item)}>
+                  <Text style={styles.EliminarButton}>eliminar</Text>
+                </TouchableOpacity>
+              </View> 
             </View>
           </View>
         )}
@@ -83,6 +86,10 @@ const styles = StyleSheet.create({
   },
   moreInfoButton: {
     color: 'blue',
+    marginTop: 8,
+  },
+  EliminarButton: {
+    color: 'red',
     marginTop: 8,
   },
 });
