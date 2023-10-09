@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MenuList from './components/MenuList.jsx';
 import LoginScreen from './components/LoginScreen.jsx'
 //api key 5163b17d295b4d59a4d339fc3b2cbeeb
+//falta, navegacion si esta ingresado sesion, ingreso de sesion terminado(preguntar que deberia devolver), pantalla de detalles y buscador.
 const App = () => {
   const Stack = createNativeStackNavigator();
   const [menuData, setMenuData] = useState([]);
