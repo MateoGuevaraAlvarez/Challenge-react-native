@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MenuList from './components/MenuList.jsx';
 import LoginScreen from './components/LoginScreen.jsx'
+import {AuthProvider} from './context/AuthContext.js'
 //api key 5163b17d295b4d59a4d339fc3b2cbeeb
 //falta, navegacion si esta ingresado sesion, ingreso de sesion terminado(preguntar que deberia devolver), pantalla de detalles y buscador.
 const App = () => {
@@ -20,12 +21,16 @@ const App = () => {
   }, []);
 
   return (
+    <AuthProvider>
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} options={{
+                headerShown: false,
+              }}/>
         <Stack.Screen name="menu" component={MenuList} />
       </Stack.Navigator>
     </NavigationContainer>
+    </AuthProvider>
   );
 };
 
