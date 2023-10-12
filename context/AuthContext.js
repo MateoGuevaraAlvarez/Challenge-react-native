@@ -28,10 +28,9 @@ export function AuthProvider({ children }) {
 
   const fakeLogin = async (email, password) => {
     let token;
-    //NO FIUNCIONAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     try {
-      const response = await fetch("http://challenge-react.alkemy.org/?email=${email}&password=${password}", {
-        method: "GET",
+      const response = await fetch("http://challenge-react.alkemy.org/?email="+ email +"&password=" + password, {
+        method: "POST",
       });
 
       if (response.ok) {

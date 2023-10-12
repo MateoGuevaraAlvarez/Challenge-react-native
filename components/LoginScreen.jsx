@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button } from "react-native";
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext.js';
+import { useNavigation } from "@react-navigation/native";
 function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -9,12 +10,12 @@ function LoginScreen({ navigation }) {
   const handleLogin = async () => {
     try{
         await login(username,password)
+        navigation.navigate("menu");
         
     }catch(error){
         console.error(error);
     }
     
-    alert("Inicio de sesión exitoso");
   };
 
   return (

@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { MenuContext } from '../context/MenuContext.js';
 
-const MenuList = ({ menuData, onPressMoreInfo }) => {
+
+const MenuList = () => {
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
-
+  const {menu, setMenu} = React.useContext(MenuContext)
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(Dimensions.get('window').width);
@@ -15,11 +17,37 @@ const MenuList = ({ menuData, onPressMoreInfo }) => {
       Dimensions.removeEventListener('change', handleResize);
     };
   }, []);
+  useEffect(() => {
+    fetch('https://api.spoonacular.com/recipes/complexSearch?apiKey=5163b17d295b4d59a4d339fc3b2cbeeb&addRecipeInformation=true', {
+      method: "GET",
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(response => setMenu(response))
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+        // Handle the error, e.g., show an error message to the user
+      });
+  }, []);
 
+  const onPressMoreInfo = (item) => {
+    // Implement your logic for more info button press
+  };
+  
+  const onPressEliminar = (item) => {
+    // Implement your logic for delete button press
+  };
+  
+
+  
   return (
     <View style={styles.container}>
       <FlatList
-        data={menuData.results}
+        data={menu}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={[styles.menuItem, { width: screenWidth - 32 }]}>
