@@ -7,17 +7,7 @@ const MenuList = () => {
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
   const {menu, setMenu} = React.useContext(MenuContext)
   useEffect(() => {
-    const handleResize = () => {
-      setScreenWidth(Dimensions.get('window').width);
-    };
 
-    Dimensions.addEventListener('change', handleResize);
-
-    return () => {
-      Dimensions.removeEventListener('change', handleResize);
-    };
-  }, []);
-  useEffect(() => {
     fetch('https://api.spoonacular.com/recipes/complexSearch?apiKey=5163b17d295b4d59a4d339fc3b2cbeeb&addRecipeInformation=true', {
       method: "GET",
     })
@@ -33,6 +23,17 @@ const MenuList = () => {
         // Handle the error, e.g., show an error message to the user
       });
   }, []);
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(Dimensions.get('window').width);
+    };
+
+    Dimensions.addEventListener('change', handleResize);
+
+    return () => {
+      Dimensions.removeEventListener('change', handleResize);
+    };
+  }, []);
 
   const onPressMoreInfo = (item) => {
     // Implement your logic for more info button press
@@ -43,12 +44,13 @@ const MenuList = () => {
   };
   
 
-  
+  //no funciona el flatlist!!!! :,vasdasdasd
   return (
-    <View style={styles.container}>
+    <>
+    {menu && (<View style={styles.container}>
       <FlatList
         data={menu}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={[styles.menuItem, { width: screenWidth - 32 }]}>
             <View style={styles.itemContent}>
@@ -69,7 +71,9 @@ const MenuList = () => {
           </View>
         )}
       />
-    </View>
+    </View>)}
+    </>
+    
   );
 };
 

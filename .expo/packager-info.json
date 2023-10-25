@@ -1,8 +1,8 @@
 {
-  "expoServerPort": 19000,
+  "expoServerPort": null,
   "packagerPort": 19000,
-  "webpackServerPort": null,
   "expoServerNgrokUrl": "https://vt-pz6.anonymous.challenge-react-native.exp.direct",
   "packagerNgrokUrl": "https://vt-pz6.anonymous.challenge-react-native.exp.direct",
-  "ngrokPid": 904
+  "ngrokPid": 17324,
+  "webpackServerPort": 19006
 }
