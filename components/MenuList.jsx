@@ -3,7 +3,7 @@ import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Dimensions }
 import { MenuContext } from '../context/MenuContext.js';
 
 
-const MenuList = () => {
+const MenuList = ({navigation}) => {
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
   const {menu, setMenu} = React.useContext(MenuContext)
   useEffect(() => {
@@ -36,20 +36,21 @@ const MenuList = () => {
   }, []);
 
   const onPressMoreInfo = (item) => {
-    // Implement your logic for more info button press
+    navigation.navigate("detalles", { plato: item });
   };
+  
   
   const onPressEliminar = (item) => {
     // Implement your logic for delete button press
   };
   
 
-  //no funciona el flatlist!!!! :,vasdasdasd
   return (
     <>
     {menu && (<View style={styles.container}>
+      {console.log(menu)}
       <FlatList
-        data={menu}
+        data={menu.results} 
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={[styles.menuItem, { width: screenWidth - 32 }]}>

@@ -5414,6 +5414,11 @@ react-is@^18.0.0:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
+react-native-table@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/react-native-table/-/react-native-table-1.0.1.tgz"
+  integrity sha512-f86nRKvXYXuzv8xqXr1Ef1PGhLciaHCjVWDCzOBMGAgNn7Bw8ByoQfr2GyObYxXnC0S4HtZ1zC5zmlsj4hM1PQ==
+
 react-native-web@^0.19.9:
   version "0.19.9"
   resolved "https://registry.npmjs.org/react-native-web/-/react-native-web-0.19.9.tgz"

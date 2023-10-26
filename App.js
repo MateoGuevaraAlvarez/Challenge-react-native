@@ -4,9 +4,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MenuList from './components/MenuList.jsx';
 import LoginScreen from './components/LoginScreen.jsx'
+import Detalles from './components/Detalles.jsx'
 import {AuthProvider} from './context/AuthContext.js'
 import {MenuProvider} from './context/MenuContext.js'
-
 
 
 
@@ -22,6 +22,7 @@ const App = () => {
                 headerShown: false,
               }}/>
         <Stack.Screen name="menu" component={MenuList} />
+        <Stack.Screen name="detalles" component={Detalles} /> 
       </Stack.Navigator>
     </NavigationContainer>
     </AuthProvider>
