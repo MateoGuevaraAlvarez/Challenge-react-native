@@ -1,28 +1,28 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, Dimensions, TextInput } from 'react-native';
 import { MenuContext } from '../context/MenuContext.js';
 
-
-const MenuList = ({navigation}) => {
+const MenuList = ({ navigation }) => {
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
-  const {menu, setMenu} = React.useContext(MenuContext)
-  useEffect(() => {
+  const [searchText, setSearchText] = useState(''); // State for search input
+  const { menu, setMenu } = React.useContext(MenuContext);
 
+  useEffect(() => {
     fetch('https://api.spoonacular.com/recipes/complexSearch?apiKey=5163b17d295b4d59a4d339fc3b2cbeeb&addRecipeInformation=true', {
       method: "GET",
     })
       .then(response => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw Error('Network response was not ok');
         }
         return response.json();
       })
       .then(response => setMenu(response))
       .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
-        // Handle the error, e.g., show an error message to the user
       });
   }, []);
+
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(Dimensions.get('window').width);
@@ -36,21 +36,27 @@ const MenuList = ({navigation}) => {
   }, []);
 
   const onPressMoreInfo = (item) => {
-    navigation.navigate("detalles", { plato: item });
+    navigation.navigate('detalles', { plato: item });
   };
-  
-  
-  const onPressEliminar = (item) => {
-    // Implement your logic for delete button press
-  };
-  
+
+  // Ensure that menu is not null before filtering
+  const filteredMenu = menu && menu.results
+    ? menu.results.filter((item) =>
+        item.title.toLowerCase().includes(searchText.toLowerCase())
+      )
+    : [];
 
   return (
-    <>
-    {menu && (<View style={styles.container}>
-      {console.log(menu)}
+    <View style={styles.container}>
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search for a menu item..."
+        onChangeText={(text) => setSearchText(text)}
+        value={searchText}
+      />
+
       <FlatList
-        data={menu.results} 
+        data={filteredMenu}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={[styles.menuItem, { width: screenWidth - 32 }]}>
@@ -67,14 +73,12 @@ const MenuList = ({navigation}) => {
                 <TouchableOpacity onPress={() => onPressEliminar(item)}>
                   <Text style={styles.EliminarButton}>eliminar</Text>
                 </TouchableOpacity>
-              </View> 
+              </View>
             </View>
           </View>
         )}
       />
-    </View>)}
-    </>
-    
+    </View>
   );
 };
 
@@ -96,7 +100,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   itemContent: {
-    flexDirection: 'row', // Coloca los elementos en una fila
+    flexDirection: 'row',
   },
   image: {
     width: 100,
@@ -124,6 +128,12 @@ const styles = StyleSheet.create({
   EliminarButton: {
     color: 'red',
     marginTop: 8,
+  },
+  searchInput: {
+    backgroundColor: 'white',
+    padding: 8,
+    marginBottom: 16,
+    borderRadius: 8,
   },
 });
 
