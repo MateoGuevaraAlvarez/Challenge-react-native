@@ -21,7 +21,9 @@ const App = () => {
         <Stack.Screen name="Login" component={LoginScreen} options={{
                 headerShown: false,
               }}/>
-        <Stack.Screen name="menu" component={MenuList} />
+        <Stack.Screen name="menu" component={MenuList} options={{
+                headerShown: false,
+              }}/>
         <Stack.Screen name="detalles" component={Detalles} /> 
       </Stack.Navigator>
     </NavigationContainer>

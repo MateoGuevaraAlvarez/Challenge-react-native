@@ -39,7 +39,32 @@ const MenuList = ({ navigation }) => {
     navigation.navigate('detalles', { plato: item });
   };
 
-  // Ensure that menu is not null before filtering
+  const getTotalPrice = () => {
+    if (menu && menu.results) {
+      var total = menu.results.reduce((total, item) => total + (item.pricePerServing || 0), 0);
+      return total.toFixed(2);
+    }
+    return 0;
+  };
+
+  const getAverageHealthScore = () => {
+    if (menu && menu.results) {
+      const totalHealthScore = menu.results.reduce((total, item) => total + (item.healthScore || 0), 0);
+      const averageHealthScore = totalHealthScore / menu.results.length;
+      return averageHealthScore.toFixed(2); // Redondea a dos decimales
+    }
+    return 0;
+  };
+
+  const onPressEliminar = (item) => {
+    const updatedMenu = {
+      ...menu,
+      results: menu.results.filter((menuItem) => menuItem.id !== item.id),
+    };
+    setMenu(updatedMenu);
+    console.log(updatedMenu);
+  };
+
   const filteredMenu = menu && menu.results
     ? menu.results.filter((item) =>
         item.title.toLowerCase().includes(searchText.toLowerCase())
@@ -71,13 +96,16 @@ const MenuList = ({ navigation }) => {
                   <Text style={styles.moreInfoButton}>Más información</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => onPressEliminar(item)}>
-                  <Text style={styles.EliminarButton}>eliminar</Text>
+                  <Text style={styles.EliminarButton}>Eliminar</Text>
                 </TouchableOpacity>
               </View>
             </View>
           </View>
         )}
       />
+
+      <Text style={styles.totalPriceText}>Total Price: ${getTotalPrice()}</Text>
+      <Text style={styles.averageHealthScoreText}>Average Health Score: {getAverageHealthScore()}</Text>
     </View>
   );
 };
@@ -128,6 +156,16 @@ const styles = StyleSheet.create({
   EliminarButton: {
     color: 'red',
     marginTop: 8,
+  },
+  totalPriceText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'green',
+  },
+  averageHealthScoreText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'blue',
   },
   searchInput: {
     backgroundColor: 'white',
